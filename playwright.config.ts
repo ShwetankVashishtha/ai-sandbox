@@ -40,7 +40,7 @@ export default defineConfig({
     /* Run tests in headmode to better debug the tests. 
     This will open a browser window and show the test execution in real-time. 
     You can interact with the browser while the tests are running, which is useful for debugging and understanding test failures. */
-    headless: false,
+    headless: true,
 
     // Handle TLS/SSL certificate validation errors by ignoring them. This is useful when testing against self-signed certificates or internal servers with invalid certificates.
     ignoreHTTPSErrors: true,
