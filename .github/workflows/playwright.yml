@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Build Docker image
         uses: docker/build-push-action@v7
@@ -24,7 +26,21 @@ jobs:
           load: true
 
       - name: Run Playwright tests
-        run: docker run --rm playwright-tests:latest
+        run: |
+          docker run \
+            --name playwright-tests \
+            playwright-tests:latest
+
+      - name: Copy Playwright report
+        if: ${{ !cancelled() }}
+        run: |
+          docker cp playwright-tests:/app/playwright-report ./playwright-report || true
+          docker rm playwright-tests || true
+
+      - name: SonarQube Cloud Scan
+        uses: SonarSource/sonarqube-scan-action@v7
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
