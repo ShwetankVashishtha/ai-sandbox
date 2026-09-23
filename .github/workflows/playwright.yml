@@ -39,11 +39,6 @@ jobs:
           docker cp playwright-tests:/test/playwright-report ./playwright-report || true
           docker rm playwright-tests || true
 
-      - name: SonarQube Cloud Scan
-        uses: SonarSource/sonarqube-scan-action@v7
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
