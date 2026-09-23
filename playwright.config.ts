@@ -40,8 +40,13 @@ export default defineConfig({
   // Reports
   reporter: [
     ['list'],
-    ['html', { open: 'never' }],
-    ['junit', { outputFile: 'test-results/results.xml' }],
+    ['html', {
+      outputFolder: 'playwright-report',
+      open: 'never',
+    }],
+    ['junit', {
+      outputFile: 'test-results/results.xml',
+    }],
   ],
 
   // Shared browser settings

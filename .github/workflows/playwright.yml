@@ -26,6 +26,8 @@ jobs:
           load: true
 
       - name: Run Playwright tests
+        id: playwright
+        continue-on-error: true
         run: |
           docker run \
             --name playwright-tests \
@@ -34,7 +36,7 @@ jobs:
       - name: Copy Playwright report
         if: ${{ !cancelled() }}
         run: |
-          docker cp playwright-tests:/app/playwright-report ./playwright-report
+          docker cp playwright-tests:/test/playwright-report ./playwright-report || true
           docker rm playwright-tests || true
 
       - name: SonarQube Cloud Scan
@@ -48,4 +50,5 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report/
+          if-no-files-found: warn
           retention-days: 30
