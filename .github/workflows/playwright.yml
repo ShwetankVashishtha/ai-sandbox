@@ -34,7 +34,7 @@ jobs:
       - name: Copy Playwright report
         if: ${{ !cancelled() }}
         run: |
-          docker cp playwright-tests:/app/playwright-report ./playwright-report || true
+          docker cp playwright-tests:/app/playwright-report ./playwright-report
           docker rm playwright-tests || true
 
       - name: SonarQube Cloud Scan
